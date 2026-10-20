@@ -6,7 +6,7 @@ Complete every launch-blocking item before inviting families.
 
 - [x] Exactly three levels are used.
 - [x] Each level has 0–5 active learners; no more than 15 total.
-- [ ] One responsible adult is named in `docs/PRIVACY-NOTICE-ES.md` and `config.js`.
+- [x] One responsible adult is named in `docs/PRIVACY-NOTICE-ES.md` and `config.js`.
 - [ ] One teacher and each parent have separate invited accounts.
 - [ ] Learners use aliases/first names only.
 

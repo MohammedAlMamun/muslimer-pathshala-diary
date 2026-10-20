@@ -1,10 +1,10 @@
 # Información de privacidad — piloto familiar
 
-> Borrador breve para completar antes del lanzamiento. Sustituye todos los campos entre corchetes. No es asesoramiento jurídico.
+> Información breve para este piloto personal y cerrado. No es asesoramiento jurídico.
 
-**Responsable:** [NOMBRE COMPLETO DE LA PERSONA RESPONSABLE], iniciativa personal “Muslimer Pathshala”.  
+**Responsable:** Mohammed Al Mamun, iniciativa personal “Muslimer Pathshala”.  
 **Contacto:** muslimerpathshala@gmail.com.  
-**Versión y fecha:** pilot-2026-10 — [FECHA].
+**Versión y fecha:** pilot-2026-10 — 20 de octubre de 2026.
 
 ## Para qué usamos los datos
 

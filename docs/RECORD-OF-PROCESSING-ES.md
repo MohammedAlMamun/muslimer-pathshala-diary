@@ -2,7 +2,7 @@
 
 | Campo | Registro del piloto |
 |---|---|
-| Responsable | [NOMBRE COMPLETO], muslimerpathshala@gmail.com |
+| Responsable | Mohammed Al Mamun, muslimerpathshala@gmail.com |
 | Actividad | Muslimer Pathshala — diario familiar piloto |
 | Finalidad | Registrar actividades diarias para reflexión y seguimiento familiar/educativo |
 | Personas | Máximo 15 menores, sus progenitores/tutores y un profesor |
@@ -11,7 +11,7 @@
 | Base prevista | Consentimiento explícito del progenitor/tutor; revisar con asesoramiento español si el uso cambia |
 | Destinatarios | Progenitor/tutor; profesor asignado en el alcance descrito |
 | Encargados técnicos | Supabase y GitHub, según sus contratos/condiciones vigentes |
-| Ubicación | Proyecto Supabase configurado en región UE; confirmar antes de lanzar |
+| Ubicación | Proyecto Supabase en EU West (Irlanda), confirmado el 20 de octubre de 2026 |
 | Conservación | Entradas 90 días; cuentas/asignaciones mientras dure la participación |
 | Seguridad | Invitación, magic link, RLS, aliases, mínimo de datos, separación de notas compartidas, sin analytics |
 | Derechos | Acceso, copia, rectificación, retirada y supresión mediante muslimerpathshala@gmail.com |

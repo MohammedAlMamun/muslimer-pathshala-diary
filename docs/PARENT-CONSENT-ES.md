@@ -2,7 +2,7 @@
 
 > Entregar junto con la información de privacidad. La aceptación digital queda registrada por familia en la aplicación. Completar los campos antes del lanzamiento.
 
-**Responsable:** [NOMBRE COMPLETO], muslimerpathshala@gmail.com  
+**Responsable:** Mohammed Al Mamun, muslimerpathshala@gmail.com  
 **Finalidad:** diario familiar de reflexión y seguimiento de actividades islámicas.  
 **Participante menor (alias):** [ALIAS]  
 **Versión:** pilot-2026-10
