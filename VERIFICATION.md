@@ -32,6 +32,14 @@ Date: 20 October 2026 (Europe/Madrid)
 - All nine pilot tables were installed and returned `relrowsecurity = true`.
 - The nightly `muslimer-pathshala-90-day-retention` Cron job was created with schedule `17 3 * * *` UTC.
 
+## Passed on the live GitHub Pages deployment
+
+- Public repository created at `https://github.com/MohammedAlMamun/muslimer-pathshala-diary`.
+- GitHub Pages publishes from `main` at `https://mohammedalmamun.github.io/muslimer-pathshala-diary/` with HTTPS enforced.
+- The live page renders the invited-email sign-in screen; the logo, stylesheet, configuration and application script load successfully.
+- Supabase Site URL and the one allowed redirect URL exactly match the live HTTPS address.
+- The live browser console showed no errors or warnings before sign-in.
+
 ## Still required with pilot accounts
 
 - Invite one teacher and the pilot parents, then run a filled local onboarding file.
