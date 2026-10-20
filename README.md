@@ -39,11 +39,12 @@ The dedicated EU-region project was installed on 20 October 2026. These are the 
 
 ## 2. Invite and onboard the pilot
 
-1. Invite the one teacher and each participating parent in **Authentication → Users**.
-2. Make a local copy of `supabase/onboard.example.sql` named `supabase/onboard.local.sql`.
-3. Replace example emails, family aliases, learner aliases and UUIDs. Repeat the family block as needed.
-4. Run the local copy in SQL Editor. It is ignored by Git and must never be committed.
-5. Run the capacity query at its end. Each level must show `5` or fewer.
+1. Ask each participating adult for the email address they want to use.
+2. Invite that exact email in **Authentication → Users**. The family then types the same email into the app whenever they need a sign-in link; they cannot create an unapproved account.
+3. Make a local copy of `supabase/onboard.example.sql` named `supabase/onboard.local.sql`.
+4. Replace example emails, family aliases, learner aliases and UUIDs. Repeat the family block as needed.
+5. Run the local copy in SQL Editor. It is ignored by Git and must never be committed.
+6. Run the capacity query at its end. Each level must show `5` or fewer.
 
 Use a short alias or first name only for a learner. Do not enter birth dates, addresses, health information or free-text religious judgments.
 
@@ -54,7 +55,8 @@ Copy the values from `config.example.js` into `config.js`:
 - `mode`: `supabase`
 - `supabaseUrl`: Project URL
 - `supabaseAnonKey`: publishable/anon key
-- `privacyContact`: the natural person responsible for the pilot
+- `responsibleName`: the natural person responsible for the pilot
+- `privacyContact`: email for access, correction, export and deletion requests
 
 The publishable/anon key is designed to appear in a public frontend; protection comes from RLS. Never put a `service_role`, secret key or database password in this repository.
 

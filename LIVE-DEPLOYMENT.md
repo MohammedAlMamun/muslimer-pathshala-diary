@@ -9,4 +9,4 @@
 
 ## Operational status
 
-The database schema, capacity controls, grants, row-level security and retention job are installed. GitHub Pages is live over HTTPS, and the pre-sign-in page, assets and browser console passed verification. Before sending invitations to families, fill the responsible person's confirmed full name in the Spanish privacy documents, invite the teacher and parents, run a private filled copy of `supabase/onboard.example.sql`, and complete the two-account smoke test in `docs/LAUNCH-CHECKLIST.md`.
+The database schema, capacity controls, grants, row-level security and retention job are installed. GitHub Pages is live over HTTPS, and the pre-sign-in page, assets and browser console passed verification. Mohammed Al Mamun is recorded as the responsible person. The teacher account `muslimerpathshala@gmail.com` has been invited and linked to an active teacher profile. Before admitting each family, invite the parent's chosen email, run a private filled copy of `supabase/onboard.example.sql`, and complete the two-account smoke test in `docs/LAUNCH-CHECKLIST.md`.

@@ -31,6 +31,7 @@ Date: 20 October 2026 (Europe/Madrid)
 - Dedicated EU-region project is healthy.
 - All nine pilot tables were installed and returned `relrowsecurity = true`.
 - The nightly `muslimer-pathshala-90-day-retention` Cron job was created with schedule `17 3 * * *` UTC.
+- The teacher email `muslimerpathshala@gmail.com` was invited and linked to an active `teacher` profile for Mohammed Al Mamun.
 
 ## Passed on the live GitHub Pages deployment
 
@@ -42,8 +43,7 @@ Date: 20 October 2026 (Europe/Madrid)
 
 ## Still required with pilot accounts
 
-- Invite one teacher and the pilot parents, then run a filled local onboarding file.
+- Invite each pilot parent and run a filled local onboarding file for that family.
 - Repeat the two-account RLS smoke test against the real hosted database.
-- Complete the responsible-person/contact fields in the Spanish privacy documents.
 
-These remaining steps require the participant list and the responsible person's confirmed full name.
+These remaining steps require the participating families' chosen emails and learner aliases.

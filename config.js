@@ -7,6 +7,7 @@ window.PILOT_CONFIG = Object.freeze({
   supabaseUrl: 'https://jopzzzylwmxzhrawumrr.supabase.co',
   supabaseAnonKey: 'sb_publishable_RSEg4yggrEYa2cO9lU3QSQ_Nd4zk9_S',
   supabaseJsUrl: 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.75.0/+esm',
+  responsibleName: 'Mohammed Al Mamun',
   privacyContact: 'muslimerpathshala@gmail.com',
   consentVersion: 'pilot-2026-10',
   retentionDays: 90
