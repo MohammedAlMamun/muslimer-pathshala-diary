@@ -4,20 +4,20 @@ Complete every launch-blocking item before inviting families.
 
 ## Scope and people
 
-- [ ] Exactly three levels are used.
-- [ ] Each level has 0–5 active learners; no more than 15 total.
+- [x] Exactly three levels are used.
+- [x] Each level has 0–5 active learners; no more than 15 total.
 - [ ] One responsible adult is named in `docs/PRIVACY-NOTICE-ES.md` and `config.js`.
 - [ ] One teacher and each parent have separate invited accounts.
 - [ ] Learners use aliases/first names only.
 
 ## Supabase
 
-- [ ] Project region is in the EU.
-- [ ] `supabase/schema.sql` completed without an error.
-- [ ] All nine tables report `relrowsecurity = true`.
-- [ ] Site URL and redirect URL exactly match the final HTTPS GitHub Pages URL.
-- [ ] Only the publishable/anon key is in `config.js`; no service key is in Git.
-- [ ] The 90-day Cron job is active, or a monthly manual purge date is scheduled.
+- [x] Project region is in the EU.
+- [x] `supabase/schema.sql` completed without an error.
+- [x] All nine tables report `relrowsecurity = true`.
+- [x] Site URL and redirect URL exactly match the final HTTPS GitHub Pages URL.
+- [x] Only the publishable/anon key is in `config.js`; no service key is in Git.
+- [x] The 90-day Cron job is active, or a monthly manual purge date is scheduled.
 
 ## Access test with two real test accounts
 
@@ -41,7 +41,7 @@ Complete every launch-blocking item before inviting families.
 
 ## Go / no-go
 
-- [ ] Mobile test passes on the phone families will use.
+- [x] Mobile test passes on the phone families will use.
 - [ ] No console errors or failed Supabase requests appear in the smoke test.
 - [ ] A backup administrator can disable an account if the primary operator is unavailable.
 - [ ] Incident contact method is written down.
