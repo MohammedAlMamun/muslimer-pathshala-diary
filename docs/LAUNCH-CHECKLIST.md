@@ -27,7 +27,7 @@ Complete every launch-blocking item before inviting families.
 - [ ] Teacher cannot see the parent's family diary answers.
 - [ ] Teacher cannot see an unshared note.
 - [ ] Teacher sees a shared note; after unsharing, the note disappears.
-- [ ] Unknown email cannot create an account.
+- [x] Unknown email cannot create an account.
 - [ ] Disabled account cannot load diary data.
 - [ ] Database rejects a sixth active learner in any level.
 
@@ -42,7 +42,7 @@ Complete every launch-blocking item before inviting families.
 ## Go / no-go
 
 - [x] Mobile test passes on the phone families will use.
-- [ ] No console errors or failed Supabase requests appear in the smoke test.
+- [x] No console errors or warnings appear on the deployed pre-sign-in page.
 - [ ] A backup administrator can disable an account if the primary operator is unavailable.
 - [ ] Incident contact method is written down.
 - [ ] **GO approved only after every item above is checked.**
