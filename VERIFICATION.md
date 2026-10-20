@@ -1,0 +1,41 @@
+# Verification report — v0.2
+
+Date: 20 October 2026 (Europe/Madrid)
+
+## Passed locally
+
+- JavaScript syntax: `app.js`, `config.js`, `config.example.js`.
+- Production mode: the frontend is configured for the dedicated Supabase project using its public publishable key.
+- Parent consent gate: consent required before diary access and retained after reload in QA mode.
+- Parent diary: learner answer saved and remained after a full page reload.
+- Teacher view: exact learner answer appeared in a read-only answer screen.
+- Note isolation: unshared family note was absent from teacher view; after explicit sharing it appeared.
+- Parent diary isolation: teacher view did not expose the family diary form/answers.
+- Three level cards rendered, each showing a five-student capacity.
+- Responsive check at 390 × 844: no document-level horizontal overflow.
+- Weekly matrix: horizontal overflow stayed inside its dedicated scroll container.
+- Browser console: no errors or warnings during the tested flow.
+- Supabase client CDN URL: pinned `@supabase/supabase-js` v2.75.0 responded successfully.
+- SQL execution: all nine tables, functions, triggers and policies executed in an in-memory PostgreSQL-compatible test database.
+- Database capacity: sixth active learner in the same level was rejected; count remained five.
+- Answer validation: an unknown answer key was rejected.
+- RLS simulation:
+  - parent saw one own learner/entry/family entry;
+  - teacher saw one assigned learner/entry;
+  - teacher saw zero private family entries;
+  - teacher saw one explicitly shared note;
+  - teacher insert into learner entries was rejected.
+
+## Passed in the hosted Supabase project
+
+- Dedicated EU-region project is healthy.
+- All nine pilot tables were installed and returned `relrowsecurity = true`.
+- The nightly `muslimer-pathshala-90-day-retention` Cron job was created with schedule `17 3 * * *` UTC.
+
+## Still required with pilot accounts
+
+- Invite one teacher and the pilot parents, then run a filled local onboarding file.
+- Repeat the two-account RLS smoke test against the real hosted database.
+- Complete the responsible-person/contact fields in the Spanish privacy documents.
+
+These remaining steps require the participant list and the responsible person's confirmed full name.
