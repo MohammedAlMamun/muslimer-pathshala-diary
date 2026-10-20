@@ -259,7 +259,7 @@
   }
   async function reload(){state.busy=true;state.error='';renderApp();try{applyData(await backend.load(state.date,state.session.user.id));}catch(e){state.error=friendlyError(e);}finally{state.busy=false;renderCurrent();}}
   function renderCurrent(){if(!state.session)return renderLogin();if(!state.profile)return renderLogin();if(isParent()&&!consentComplete())return renderConsent();renderApp();}
-  function friendlyError(error){const text=String(error?.message||error||'Unknown error');if(/Invalid login credentials|User not found/i.test(text))return 'এই email এখনো pilot-এ আমন্ত্রিত নয়।';return text;}
+  function friendlyError(error){const text=String(error?.message||error||'Unknown error');if(/Invalid login credentials|User not found|Signups not allowed for otp/i.test(text))return 'এই email এখনো pilot-এ আমন্ত্রিত নয়। প্রথমে pilot পরিচালকের সঙ্গে যোগাযোগ করুন।';return text;}
   async function saveLearnerAnswer(input){
     if(!isParent())return;const learner=state.learners.find(x=>x.id===input.dataset.entity);if(!learner)return;
     const current={...learnerEntry(learner.id).answers,[input.dataset.question]:input.value};state.busy=true;renderApp();

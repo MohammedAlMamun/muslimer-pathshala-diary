@@ -40,6 +40,7 @@ Date: 20 October 2026 (Europe/Madrid)
 - The live page renders the invited-email sign-in screen; the logo, stylesheet, configuration and application script load successfully.
 - Supabase Site URL and the one allowed redirect URL exactly match the live HTTPS address.
 - The live browser console showed no errors or warnings before sign-in.
+- An unknown email was rejected with sign-up disabled; no account was created.
 
 ## Still required with pilot accounts
 
