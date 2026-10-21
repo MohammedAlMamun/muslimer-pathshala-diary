@@ -127,11 +127,12 @@
       if(i<0)this.db.learnerEntries.push(row);else this.db.learnerEntries[i]=row;this.persist();return row;
     }
     async saveFamily(familyId,date,answers,note,share){
-      const row={family_id:familyId,entry_date:date,answers:{...answers},note};
+      const cleanNote=String(note??'').trim(),shareNote=Boolean(share&&cleanNote);
+      const row={family_id:familyId,entry_date:date,answers:{...answers},note:cleanNote};
       const i=this.db.familyEntries.findIndex(x=>entryKey(x.family_id,x.entry_date)===entryKey(familyId,date));
       if(i<0)this.db.familyEntries.push(row);else this.db.familyEntries[i]=row;
       const n=this.db.sharedNotes.findIndex(x=>entryKey(x.family_id,x.entry_date)===entryKey(familyId,date));
-      if(share&&note){const shared={family_id:familyId,entry_date:date,note};if(n<0)this.db.sharedNotes.push(shared);else this.db.sharedNotes[n]=shared;}else if(n>=0)this.db.sharedNotes.splice(n,1);
+      if(shareNote){const shared={family_id:familyId,entry_date:date,note:cleanNote};if(n<0)this.db.sharedNotes.push(shared);else this.db.sharedNotes[n]=shared;}else if(n>=0)this.db.sharedNotes.splice(n,1);
       this.persist();return row;
     }
     async saveTeacher(date,answers,privateNote,parentMessage,publish){
@@ -198,8 +199,9 @@
       return this.query(this.client.from('learner_entries').upsert({learner_id:learnerId,entry_date:date,answers,created_by:userId},{onConflict:'learner_id,entry_date'}).select('learner_id,entry_date,answers,updated_at').single());
     }
     async saveFamily(familyId,date,answers,note,share,userId){
-      const row=await this.query(this.client.from('family_entries').upsert({family_id:familyId,entry_date:date,answers,note,created_by:userId},{onConflict:'family_id,entry_date'}).select('family_id,entry_date,answers,note,updated_at').single());
-      if(share&&note){await this.query(this.client.from('shared_family_notes').upsert({family_id:familyId,entry_date:date,note,created_by:userId},{onConflict:'family_id,entry_date'}).select('family_id'));}
+      const cleanNote=String(note??'').trim(),shareNote=Boolean(share&&cleanNote);
+      const row=await this.query(this.client.from('family_entries').upsert({family_id:familyId,entry_date:date,answers,note:cleanNote,created_by:userId},{onConflict:'family_id,entry_date'}).select('family_id,entry_date,answers,note,updated_at').single());
+      if(shareNote){await this.query(this.client.from('shared_family_notes').upsert({family_id:familyId,entry_date:date,note:cleanNote,created_by:userId},{onConflict:'family_id,entry_date'}).select('family_id'));}
       else {const {error}=await this.client.from('shared_family_notes').delete().eq('family_id',familyId).eq('entry_date',date);if(error)throw error;}
       return row;
     }
@@ -314,12 +316,42 @@
   function friendlyError(error){const text=String(error?.message||error||'Unknown error');if(/Invalid login credentials|User not found|Signups not allowed for otp/i.test(text))return 'এই email এখনো pilot-এ আমন্ত্রিত নয়। প্রথমে pilot পরিচালকের সঙ্গে যোগাযোগ করুন।';return text;}
   async function saveLearnerAnswer(input){
     if(!isParent())return;const learner=state.learners.find(x=>x.id===input.dataset.entity);if(!learner)return;
-    const current={...learnerEntry(learner.id).answers,[input.dataset.question]:input.value};state.busy=true;renderApp();
-    try{const row=await backend.saveLearner(learner.id,state.date,current,state.session.user.id);upsertLocal('learnerEntries',row,'learner_id');showToast('উত্তর সংরক্ষিত হয়েছে');}catch(e){state.error=friendlyError(e);}finally{state.busy=false;renderApp();}
+    const previous=learnerEntry(learner.id),previousAnswers={...(previous.answers||{})};
+    const current={...previousAnswers,[input.dataset.question]:input.value};
+    upsertLocal('learnerEntries',{...previous,learner_id:learner.id,entry_date:state.date,answers:current},'learner_id');
+    state.busy=true;renderApp();
+    try{const row=await backend.saveLearner(learner.id,state.date,current,state.session.user.id);upsertLocal('learnerEntries',row,'learner_id');showToast('উত্তর সংরক্ষিত হয়েছে');}
+    catch(e){
+      const rollback={...learnerEntry(learner.id),answers:{...current}};
+      if(rollback.answers[input.dataset.question]===input.value){
+        if(previousAnswers[input.dataset.question]===undefined)delete rollback.answers[input.dataset.question];
+        else rollback.answers[input.dataset.question]=previousAnswers[input.dataset.question];
+      }
+      upsertLocal('learnerEntries',rollback,'learner_id');state.error=friendlyError(e);
+    }finally{state.busy=false;renderApp();}
   }
   async function saveFamilyAnswer(input){
-    if(!isParent())return;captureNoteDraft();const family=ownFamily();const current={...familyEntry(family.id).answers,[input.dataset.question]:input.value};state.busy=true;renderApp();
-    try{const row=await backend.saveFamily(family.id,state.date,current,state.noteDraft,state.shareDraft,state.session.user.id);upsertLocal('familyEntries',row,'family_id');await reload();showToast('উত্তর সংরক্ষিত হয়েছে');}catch(e){state.error=friendlyError(e);state.busy=false;renderApp();}
+    if(!isParent())return;
+    captureNoteDraft();
+    const family=ownFamily();
+    const previous=familyEntry(family.id),previousAnswers={...(previous.answers||{})};
+    const current={...previousAnswers,[input.dataset.question]:input.value};
+    upsertLocal('familyEntries',{...previous,family_id:family.id,entry_date:state.date,answers:current,note:state.noteDraft},'family_id');
+    state.busy=true;renderApp();
+    try{
+      const row=await backend.saveFamily(family.id,state.date,current,state.noteDraft,state.shareDraft,state.session.user.id);
+      upsertLocal('familyEntries',row,'family_id');
+      await reload();
+      showToast('উত্তর সংরক্ষিত হয়েছে');
+    }catch(e){
+      const rollback={...familyEntry(family.id),answers:{...current}};
+      if(rollback.answers[input.dataset.question]===input.value){
+        if(previousAnswers[input.dataset.question]===undefined)delete rollback.answers[input.dataset.question];
+        else rollback.answers[input.dataset.question]=previousAnswers[input.dataset.question];
+      }
+      upsertLocal('familyEntries',rollback,'family_id');
+      state.error=friendlyError(e);state.busy=false;renderApp();
+    }
   }
   function upsertLocal(collection,row,idField){const list=state[collection],i=list.findIndex(x=>entryKey(x[idField],x.entry_date)===entryKey(row[idField],row.entry_date));if(i<0)list.push(row);else list[i]=row;}
 
@@ -340,8 +372,24 @@
       try{await backend.acceptConsent(state.families.map(f=>f.id),CONFIG.consentVersion,state.session.user.id);await reload();}catch(err){state.error=friendlyError(err);state.busy=false;renderConsent();}return;
     }
     if(action.dataset.action==='save-family-note'){
-      captureNoteDraft();const family=ownFamily(),record=familyEntry(family.id);state.busy=true;renderApp();
-      try{const row=await backend.saveFamily(family.id,state.date,record.answers||{},state.noteDraft,state.shareDraft,state.session.user.id);upsertLocal('familyEntries',row,'family_id');await reload();showToast('নোট সংরক্ষিত হয়েছে');}catch(err){state.error=friendlyError(err);state.busy=false;renderApp();}return;
+      captureNoteDraft();
+      const family=ownFamily(),record=familyEntry(family.id),previous={...record,note:record.note||''},previousShared=state.sharedNotes.find(x=>x.family_id===family.id&&x.entry_date===state.date);
+      const cleanNote=state.noteDraft.trim(),shareNote=Boolean(state.shareDraft&&cleanNote);
+      upsertLocal('familyEntries',{...record,family_id:family.id,entry_date:state.date,note:cleanNote},'family_id');
+      state.busy=true;state.error='';renderApp();
+      try{
+        const row=await backend.saveFamily(family.id,state.date,record.answers||{},cleanNote,shareNote,state.session.user.id);
+        upsertLocal('familyEntries',row,'family_id');
+        await reload();
+        showToast('নোট সংরক্ষিত হয়েছে');
+      }catch(err){
+        upsertLocal('familyEntries',previous,'family_id');
+        const currentShared=state.sharedNotes.findIndex(x=>x.family_id===family.id&&x.entry_date===state.date);
+        if(previousShared){if(currentShared<0)state.sharedNotes.push(previousShared);else state.sharedNotes[currentShared]=previousShared;}
+        else if(currentShared>=0)state.sharedNotes.splice(currentShared,1);
+        state.error=friendlyError(err);state.busy=false;renderApp();
+      }
+      return;
     }
     if(action.dataset.action==='save-teacher-entry'){
       captureTeacherDraft();const answers=teacherAnswersFromForm();
