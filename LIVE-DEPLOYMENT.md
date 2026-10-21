@@ -6,6 +6,7 @@
 - Data boundary: three levels, at most five active learners per level
 - Retention: automatic 90-day purge scheduled nightly at 03:17 UTC
 - Access: the app is invitation-only; the Supabase public-signup toggle still needs to be disabled before family onboarding
+- Teacher monitoring: apply `supabase/hotfix-v03-4-teacher-family-answers.sql` so assigned teachers can read only the guardian's four daily support answers. Private guardian comments remain excluded unless explicitly shared.
 
 ## Operational status
 
