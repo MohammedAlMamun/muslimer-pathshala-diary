@@ -1,6 +1,6 @@
-# Muslimer Pathshala Activity Diary — primary pilot v0.2
+# Muslimer Pathshala Activity Diary — primary pilot v0.3
 
-A closed, small-scale diary for three learning levels, capped at five active learners per level (15 total). Parents record daily learner/family reflections. The assigned teacher can read learner answers and only the family notes that a parent explicitly shares.
+A closed, small-scale diary for three learning levels, capped at five active learners per level (15 total). Parents record daily learner/family reflections. The assigned teacher can read learner answers, the guardian's four daily support answers, and only the family notes that a parent explicitly shares. The teacher also has a private daily muhasabah and can publish a separate general message to assigned families.
 
 The production configuration is connected to the dedicated Supabase project and is intended for the public GitHub Pages URL `https://mohammedalmamun.github.io/muslimer-pathshala-diary/`. Diary data remains behind invited-email authentication and database row-level security; the public site does not provide open registration.
 
@@ -11,8 +11,10 @@ The production configuration is connected to the dedicated Supabase project and 
 - Accounts: invited parents and designated teacher only; no open registration.
 - Names: use learner aliases, not full legal names.
 - Teacher: read-only access to assigned learner answers.
-- Parent diary: never visible to the teacher.
+- Guardian support answers: the four daily support answers are visible read-only to the assigned teacher; private guardian comments remain private unless explicitly shared.
 - Family notes: visible to the teacher only after an explicit share action.
+- Teacher muhasabah: prayer, Qur'an, preparation and private note are visible only to that teacher.
+- Teacher updates: families see only a separate message that the teacher explicitly publishes.
 - Diary retention: 90-day purge function and optional nightly Cron job.
 - No analytics, ads, social login, ranking, or devotional scoring.
 
@@ -32,10 +34,12 @@ The dedicated EU-region project was installed on 20 October 2026. These are the 
 
 1. Create a new project and select an EU region near Spain.
 2. In **SQL Editor**, run `supabase/schema.sql` in full.
-3. Confirm the final result lists all nine pilot tables with `relrowsecurity = true`.
+3. Confirm the final result lists all eleven pilot tables with `relrowsecurity = true`.
 4. Enable Supabase Cron, then run `supabase/retention-cron.sql`. If Cron is unavailable, run `select public.purge_old_diary_entries();` monthly from SQL Editor until it is enabled.
 5. In **Authentication → URL Configuration**, set the Site URL to the final GitHub Pages URL and add the exact same URL to Redirect URLs.
-6. Keep email authentication enabled. The app passes `shouldCreateUser: false`, so unknown email addresses cannot create accounts from the login screen.
+6. Keep email authentication enabled and turn **Allow new users to sign up** off after the invited users have been created. The app also passes `shouldCreateUser: false`, so unknown addresses cannot create accounts from its login screen.
+7. Configure **Authentication → Emails → SMTP Settings** before inviting external families. Supabase's default sender is currently limited to two messages per hour and project-team addresses; see [Supabase custom SMTP](https://supabase.com/docs/guides/auth/auth-smtp).
+8. Leave the default session settings for this pilot. The browser stores and refreshes the session, so a family normally uses its email link once on that device and remains signed in until sign-out, browser storage removal or another session-ending event.
 
 ## 2. Invite and onboard the pilot
 
@@ -69,6 +73,8 @@ Complete `docs/LAUNCH-CHECKLIST.md` with one parent test account and the teacher
 - a teacher sees the learner's actual submitted answer;
 - an unshared family note is absent from the teacher account;
 - a shared note appears, and disappears after the parent unshares it;
+- a teacher's private muhasabah is absent from the parent account;
+- a separately published teacher message appears to an assigned parent and disappears after unpublishing;
 - a sixth active learner in a level is rejected by the database.
 
 ## 5. GitHub Pages deployment
