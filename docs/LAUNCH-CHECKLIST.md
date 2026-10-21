@@ -13,11 +13,13 @@ Complete every launch-blocking item before inviting families.
 ## Supabase
 
 - [x] Project region is in the EU.
-- [x] `supabase/schema.sql` completed without an error.
-- [x] All nine tables report `relrowsecurity = true`.
+- [x] v0.3 `supabase/schema.sql` completed without an error.
+- [x] All eleven tables report `relrowsecurity = true`.
 - [x] Site URL and redirect URL exactly match the final HTTPS GitHub Pages URL.
 - [x] Only the publishable/anon key is in `config.js`; no service key is in Git.
 - [x] The 90-day Cron job is active, or a monthly manual purge date is scheduled.
+- [ ] Custom SMTP is configured and a sign-in email reaches a non-project-team test address.
+- [ ] Public signup is disabled after the invited test users have been created.
 
 ## Access test with two real test accounts
 
@@ -27,6 +29,9 @@ Complete every launch-blocking item before inviting families.
 - [ ] Teacher cannot see the parent's family diary answers.
 - [ ] Teacher cannot see an unshared note.
 - [ ] Teacher sees a shared note; after unsharing, the note disappears.
+- [ ] Parent cannot read the teacher's private muhasabah table or private note.
+- [ ] Parent sees an explicitly published teacher message; after unpublishing, it disappears.
+- [ ] One-time email login remains signed in after closing and reopening the same mobile browser.
 - [x] Unknown email cannot create an account.
 - [ ] Disabled account cannot load diary data.
 - [ ] Database rejects a sixth active learner in any level.
