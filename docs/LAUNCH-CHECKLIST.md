@@ -26,7 +26,7 @@ Complete every launch-blocking item before inviting families.
 - [ ] Parent sees only their family and learners.
 - [ ] Parent can submit and reload an answer.
 - [ ] Teacher sees the learner's submitted answer but cannot change it.
-- [ ] Teacher cannot see the parent's family diary answers.
+- [ ] Teacher sees the assigned family's four guardian support answers but cannot change them.
 - [ ] Teacher cannot see an unshared note.
 - [ ] Teacher sees a shared note; after unsharing, the note disappears.
 - [ ] Parent cannot read the teacher's private muhasabah table or private note.
